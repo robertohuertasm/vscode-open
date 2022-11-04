@@ -15,7 +15,7 @@
 
 <br/>
 
-![demo](https://raw.githubusercontent.com/robertohuertasm/vscode-open/master/resources/images/demo.gif)
+![demo](https://raw.githubusercontent.com/robertohuertasm/vscode-open/master/resources/demo.gif)
 
 </div>
 
@@ -93,7 +93,7 @@ If you want to add links to [Visual Studio Code](https://code.visualstudio.com) 
 
 You'll get these links:
 
-![github links](https://raw.githubusercontent.com/robertohuertasm/vscode-open/master/resources/github_links.gif)
+![github links](https://raw.githubusercontent.com/robertohuertasm/vscode-open/master/resources/github_links.png)
 
 Just download the [user script](resources/userScripts/detailPage.js) and use the [TamperMonkey](https://www.tampermonkey.net/) browser extension.
 
