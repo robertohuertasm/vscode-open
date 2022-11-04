@@ -1,0 +1,53 @@
+name: CI
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - ".vscode/**"
+      - "coverage/**"
+      - "**.md"
+  pull_request:
+    paths-ignore:
+      - ".vscode/**"
+      - "coverage/**"
+      - "**.md"
+  workflow_dispatch:
+
+jobs:
+  ci:
+    name: ' Format, lint and build: Node ${{ matrix.node }} on ${{ matrix.os }}'
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        node: [
+            'lts/*', # latest node
+          ]
+    runs-on: ${{ matrix.os }}
+    if: "github.event.pull_request.user.login != 'dependabot[bot]'"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: 'Setting up Node.js ${{ matrix.node }}'
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Format (prettier)
+        run: npm run format:check
+
+      - name: Lint (eslint)
+        run: npm run lint
+
+      - name: Build
+        run: npm run compile

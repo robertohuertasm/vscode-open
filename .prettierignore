@@ -1,0 +1,6 @@
+.output
+.vscode*
+*.md
+package*.json
+coverage
+*.yaml

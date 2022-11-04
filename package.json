@@ -1,0 +1,140 @@
+{
+  "name": "vscode-open",
+  "displayName": "vscode-open",
+  "description": "Open Visual Studio Code with a URL",
+  "version": "1.0.0",
+  "publisher": "robertohuertasm",
+  "license": "MIT",
+  "author": {
+    "name": "Roberto Huertas",
+    "email": "roberto.huertas@outlook.com",
+    "url": "https://robertohuertas.com"
+  },
+  "readme": "README.md",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/robertohuertasm/vscode-open"
+  },
+  "bugs": {
+    "url": "https://github.com/robertohuertasm/vscode-open/issues",
+    "email": "roberto.huertas@outlook.com"
+  },
+  "engines": {
+    "vscode": "^1.71.0"
+  },
+  "preview": true,
+  "capabilities": {
+    "virtualWorkspaces": true,
+    "untrustedWorkspaces": {
+      "supported": true
+    }
+  },
+  "galleryBanner": {
+    "color": "#3f860b",
+    "theme": "dark"
+  },
+  "badges": [
+    {
+      "url": "https://github.com/robertohuertasm/vscode-open/actions/workflows/ci.yaml/badge.svg",
+      "href": "https://github.com/robertohuertasm/vscode-open/actions/workflows/ci.yaml",
+      "description": "CI"
+    }
+  ],
+  "extensionKind": [
+    "ui",
+    "workspace"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "icon": "resources/logo.png",
+  "keywords": [
+    "open",
+    "vscode",
+    "editor",
+    "link to IDE",
+    "url"
+  ],
+  "homepage": "https://github.com/robertohuertasm/vscode-open",
+  "sponsor": {
+    "url": "https://robertohuertas.com/sponsorship/"
+  },
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vscode-open.reset",
+        "category": "VSCode Open",
+        "title": "Reset pending operations and flush known repositories"
+      },
+      {
+        "command": "vscode-open.knownRepos",
+        "category": "VSCode Open",
+        "title": "Show known repositories"
+      }
+    ],
+    "configuration": {
+      "title": "VSCode Open",
+      "properties": {
+        "vscode-open.gitFolders": {
+          "type": "array",
+          "default": [],
+          "description": "Add here root folders containing your git repositories. The extension will use them to be able to open links to them (Liunx)"
+        },
+        "vscode-open.gitFoldersMac": {
+          "type": "array",
+          "default": [],
+          "description": "Add here root folders containing your git repositories. The extension will use them to be able to open links to them (Mac)"
+        },
+        "vscode-open.gitFoldersWindows": {
+          "type": "array",
+          "default": [],
+          "description": "Add here root folders containing your git repositories. The extension will use them to be able to open links to them. (Only Windows)"
+        },
+        "vscode-open.maxGitFolderDepth": {
+          "type": "number",
+          "minimum": 1,
+          "default": 2,
+          "description": "The amount of nested folder the extension will look into. Keep it reduced."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "changelog:first": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js",
+    "package": "vsce package",
+    "format:check": "prettier --check .",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@types/glob": "^8.0.0",
+    "@types/mocha": "^10.0.0",
+    "@types/node": "16.x",
+    "@types/qs": "^6.9.7",
+    "@types/vscode": "^1.71.0",
+    "@typescript-eslint/eslint-plugin": "^5.41.0",
+    "@typescript-eslint/parser": "^5.41.0",
+    "@vscode/test-electron": "^2.2.0",
+    "chrome-types": "^0.1.144",
+    "conventional-changelog-cli": "^2.2.2",
+    "eslint": "^8.26.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "prettier": "^2.7.1",
+    "typescript": "^4.8.4",
+    "vsce": "^2.13.0"
+  },
+  "dependencies": {
+    "qs": "^6.11.0"
+  }
+}
