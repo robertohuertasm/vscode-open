@@ -1,5 +1,5 @@
 {
-  "name": "vscode-open-url",
+  "name": "open-vscode",
   "displayName": "vscode-open",
   "description": "Open Visual Studio Code with a URL",
   "version": "1.0.0",
