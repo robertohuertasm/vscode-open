@@ -41,7 +41,7 @@ The extension allows you to open Visual Studio Code from any well-formed URL.
 
 The **URL format** should be:
 
-`vscode://robertohuertasm.vscode-open?repo=<name_of_your_repo>&file=<path_to_your_file>&range=<line:char-line:char>&uri=<git_clone_uri>&ref=<commit_hash_or_branch_name_or_tag_name>`.
+`vscode://robertohuertasm.open-vscode?repo=<name_of_your_repo>&file=<path_to_your_file>&range=<line:char-line:char>&uri=<git_clone_uri>&ref=<commit_hash_or_branch_name_or_tag_name>`.
 
 Where:
 
@@ -61,13 +61,13 @@ Examples:
 
 ```sh
 # Visual Studio Code
-vscode://robertohuertasm.vscode-open?repo=licensebat&uri=https://github.com/licensebat/licensebat.git&ref=6ec2f28d98d61f8d56cabeb5028abcd432f5bf41&file=licensebat-cli/src/cli.rs&range=17:5
+vscode://robertohuertasm.open-vscode?repo=licensebat&uri=https://github.com/licensebat/licensebat.git&ref=6ec2f28d98d61f8d56cabeb5028abcd432f5bf41&file=licensebat-cli/src/cli.rs&range=17:5
 
 # Visual Studio Code Insiders
-vscode-insiders://robertohuertasm.vscode-open?repo=licensebat&uri=https://github.com/licensebat/licensebat.git&ref=6ec2f28d98d61f8d56cabeb5028abcd432f5bf41&file=licensebat-cli/src/cli.rs&range=17:5
+vscode-insiders://robertohuertasm.open-vscode?repo=licensebat&uri=https://github.com/licensebat/licensebat.git&ref=6ec2f28d98d61f8d56cabeb5028abcd432f5bf41&file=licensebat-cli/src/cli.rs&range=17:5
 
 # VSCodium
-vscodium://robertohuertasm.vscode-open?repo=licensebat&uri=https://github.com/licensebat/licensebat.git&ref=6ec2f28d98d61f8d56cabeb5028abcd432f5bf41&file=licensebat-cli/src/cli.rs&range=17:5
+vscodium://robertohuertasm.open-vscode?repo=licensebat&uri=https://github.com/licensebat/licensebat.git&ref=6ec2f28d98d61f8d56cabeb5028abcd432f5bf41&file=licensebat-cli/src/cli.rs&range=17:5
 ```
 
 ## Strategies to locate repositories

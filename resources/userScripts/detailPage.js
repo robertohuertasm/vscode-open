@@ -61,7 +61,7 @@ function addElement(time) {
         .substring(firstSlashIndex + 1, rest.length)
         .split('#');
       // build link
-      let link = `vscode://robertohuertasm.vscode-open?repo=${repoName}&file=${file}&uri=${repoUri}&ref=${ref}`;
+      let link = `vscode://robertohuertasm.open-vscode?repo=${repoName}&file=${file}&uri=${repoUri}&ref=${ref}`;
       if (range) {
         // L3
         // L3-L5
