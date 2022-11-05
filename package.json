@@ -129,7 +129,7 @@
     "conventional-changelog-cli": "^2.2.2",
     "eslint": "^8.26.0",
     "glob": "^8.0.3",
-    "mocha": "^10.0.0",
+    "mocha": "^10.1.0",
     "prettier": "^2.7.1",
     "typescript": "^4.8.4",
     "vsce": "^2.13.0"
