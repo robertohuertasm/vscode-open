@@ -8,7 +8,7 @@
 <h3>Open <a href="https://code.visualstudio.com" target="_blank">Visual Studio Code</a> with a URL</h3>
 <br/>
 
-[![Version](https://vsmarketplacebadge.apphb.com/version-short/robertohuertasm.open-vscode.svg?style=ofor-the-badge&colorA=252525&colorB=3f860b)](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.open-vscode)
+[![Version](https://vsmarketplacebadge.apphb.com/version-short/robertohuertasm.open-vscode.svg?style=for-the-badge&colorA=252525&colorB=3f860b)](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.open-vscode)
 [![Installs](https://vsmarketplacebadge.apphb.com/installs-short/robertohuertasm.open-vscode.svg?style=for-the-badge&colorA=252525&colorB=3f860b)](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.open-vscode)
 [![Downloads](https://vsmarketplacebadge.apphb.com/downloads-short/robertohuertasm.open-vscode.svg?style=for-the-badge&colorA=252525&colorB=3f860b)](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.open-vscode)
 [![Ratings](https://vsmarketplacebadge.apphb.com/rating/robertohuertasm.open-vscode.svg?style=for-the-badge&colorA=252525&colorB=3f860b)](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.open-vscode)
