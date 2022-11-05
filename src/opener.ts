@@ -28,6 +28,16 @@ function isAvoidableDir(dir: string): boolean {
   );
 }
 
+async function isGitRepo(dirUri: vscode.Uri) {
+  const gitFolder = vscode.Uri.joinPath(dirUri, '.git');
+  try {
+    await vscode.workspace.fs.stat(gitFolder);
+    return true;
+  } catch (error) {
+    return false;
+  }
+}
+
 export class Opener {
   public readonly repoName: string;
   public readonly repoUri?: string;
@@ -227,11 +237,12 @@ export class Opener {
     try {
       const items = await vscode.workspace.fs.readDirectory(dir);
       for (const item of items) {
-        if (item[1] === vscode.FileType.File || isAvoidableDir(item[0])) {
+        const itemName = item[0];
+        if (item[1] === vscode.FileType.File || isAvoidableDir(itemName)) {
           continue;
         }
-        const dirUri = vscode.Uri.joinPath(dir, item[0]);
-        if (item[0] === this.repoName) {
+        const dirUri = vscode.Uri.joinPath(dir, itemName);
+        if (itemName === this.repoName && (await isGitRepo(dirUri))) {
           // found!
           return dirUri;
         } else {
