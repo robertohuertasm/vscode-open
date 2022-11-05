@@ -1,3 +1,16 @@
+## [1.0.3](https://github.com/robertohuertasm/vscode-open/compare/v1.0.0...v1.0.3) (2022-11-05)
+
+
+### Bug Fixes
+
+* **badge:** minor typo in version badge ([a908688](https://github.com/robertohuertasm/vscode-open/commit/a9086886c7e5b51013d8f5e6f1de31161db31e18))
+* **badges:** fixed urls ([abb0b74](https://github.com/robertohuertasm/vscode-open/commit/abb0b740923543db1a4fdd19037ca70b90d52f9c))
+* **name:** extension name was wrong ([6254ddc](https://github.com/robertohuertasm/vscode-open/commit/6254ddc15a061ac0ce772a64f8d37455236cff4c))
+* **opener:** check if repo ([46264ff](https://github.com/robertohuertasm/vscode-open/commit/46264ff40e1a82d5f7ef7f07c458b9eb4a90ec88)), closes [#1](https://github.com/robertohuertasm/vscode-open/issues/1)
+* **readme:** fix images ([263e7b0](https://github.com/robertohuertasm/vscode-open/commit/263e7b090a6bdb116c853d3f371863afb670cf30))
+
+
+
 ## [1.0.2](https://github.com/robertohuertasm/vscode-open/compare/v1.0.0...v1.0.2) (2022-11-05)
 
 
