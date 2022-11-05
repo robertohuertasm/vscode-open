@@ -36,7 +36,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file_glob: true
-          file: vscode-open-*.*.*.vsix
+          file: ${{ steps.packageExtension.outputs.vsixPath }}
           overwrite: true
           tag: ${{ github.ref }}
 
