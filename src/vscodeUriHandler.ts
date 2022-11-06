@@ -8,7 +8,7 @@ import {
 } from './repoHistory';
 
 export class VSCodeOpenUriHandler implements vscode.UriHandler {
-  constructor(private context: vscode.ExtensionContext, private git: API) {
+  constructor(private context: vscode.ExtensionContext, private git?: API) {
     // fire and forget
     this.handlePendingUriToOpen();
     this.storeFolderInformation();
