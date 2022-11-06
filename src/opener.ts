@@ -5,6 +5,7 @@ import {
   addPendingUriToOpen,
   getOpenedRepoHistory,
   removeOpenedRepoFromHistory,
+  resetPendingUriToOpen,
 } from './repoHistory';
 
 // The kind of URIS we are handling will be like this:
@@ -188,13 +189,15 @@ export class Opener {
         console.error(`Known repo must have been deleted. Not found. ${err}`);
       }
     }
-    // 2. if folder doesn't exist, we're going to ask the user to select a folder or clone the repo
+    // 2. if folder doesn't exist, we're going to ask the user to select a folder or clone the repo (only if there's git support)
     const cloneIt = `Clone it`;
     const openIt = `Open it from my computer`;
+    const dont = `Don't do anything`;
+    const possibilities =
+      this.git && this.repoUri ? [cloneIt, openIt, dont] : [openIt, dont];
     const response = await vscode.window.showInformationMessage(
       `We cannot find repo ${this.repoName}. What do you want to do?`,
-      cloneIt,
-      openIt,
+      ...possibilities,
     );
     if (response === cloneIt) {
       await vscode.commands.executeCommand('vscode.open', this.toGitCloneUri());
@@ -202,6 +205,9 @@ export class Opener {
       await vscode.commands.executeCommand('vscode.openFolder', undefined, {
         forceNewWindow,
       });
+    } else {
+      // user cancelled - get out of pending
+      resetPendingUriToOpen(this.context);
     }
   }
 

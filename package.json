@@ -2,7 +2,7 @@
   "name": "open-vscode",
   "displayName": "vscode-open",
   "description": "Open Visual Studio Code with a URL",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "publisher": "robertohuertasm",
   "license": "MIT",
   "author": {
