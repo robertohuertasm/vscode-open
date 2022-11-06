@@ -9,11 +9,12 @@ import {
 } from './repoHistory';
 import { VSCodeOpenUriHandler } from './vscodeUriHandler';
 
-async function getGitApi(): Promise<API> {
+async function getGitApi(): Promise<API | undefined> {
   const gitExtension =
     vscode.extensions.getExtension<GitExtension>('vscode.git');
   if (!gitExtension) {
-    throw new Error('Git extension not found');
+    console.error('Git extension not found!');
+    return undefined;
   }
   const gitApi = gitExtension.isActive
     ? gitExtension.exports
@@ -24,8 +25,7 @@ async function getGitApi(): Promise<API> {
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext) {
-  console.log('Extension "vscode-open" is now active!');
-  const git = await getGitApi();
+  console.log('vscode-open enabled!');
 
   context.subscriptions.push(
     vscode.commands.registerCommand('vscode-open.reset', () => {
@@ -49,6 +49,8 @@ export async function activate(context: vscode.ExtensionContext) {
       }
     }),
   );
+
+  const git = await getGitApi();
 
   context.subscriptions.push(
     vscode.window.registerUriHandler(new VSCodeOpenUriHandler(context, git)),

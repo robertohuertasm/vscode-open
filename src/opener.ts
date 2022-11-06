@@ -49,7 +49,7 @@ export class Opener {
   constructor(
     private originalUri: vscode.Uri,
     private context: vscode.ExtensionContext,
-    private git: API,
+    private git?: API,
   ) {
     const query = qs.parse(originalUri.query) as {
       repo: string;
@@ -81,7 +81,7 @@ export class Opener {
 
     if (correctWorkspace) {
       // did the user asked for a particular ref?
-      const gitRepo = await this.git.openRepository(correctWorkspace.uri);
+      const gitRepo = await this.git?.openRepository(correctWorkspace.uri);
       if (gitRepo && this.repoRef) {
         // are we in the correct ref?
         let currentCommit = (await this.getCurrentCommit(gitRepo))?.commit;
