@@ -1,3 +1,12 @@
+## [1.0.4](https://github.com/robertohuertasm/vscode-open/compare/v1.0.3...v1.0.4) (2022-11-06)
+
+
+### Features
+
+* **git:** support to work without git ([#8](https://github.com/robertohuertasm/vscode-open/issues/8)) ([0d3ccc8](https://github.com/robertohuertasm/vscode-open/commit/0d3ccc813641c6038b851416476e82cacc136626)), closes [#2](https://github.com/robertohuertasm/vscode-open/issues/2)
+
+
+
 ## [1.0.3](https://github.com/robertohuertasm/vscode-open/compare/v1.0.0...v1.0.3) (2022-11-05)
 
 
