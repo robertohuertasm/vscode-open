@@ -1,3 +1,12 @@
+## [1.0.5](https://github.com/robertohuertasm/vscode-open/compare/v1.0.4...v1.0.5) (2022-11-06)
+
+
+### Bug Fixes
+
+* **opener:** don't show clone option if not available ([#9](https://github.com/robertohuertasm/vscode-open/issues/9)) ([67928be](https://github.com/robertohuertasm/vscode-open/commit/67928be35eefc856cc690dbe34da639890f94a0f))
+
+
+
 ## [1.0.4](https://github.com/robertohuertasm/vscode-open/compare/v1.0.3...v1.0.4) (2022-11-06)
 
 
