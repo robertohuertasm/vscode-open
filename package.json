@@ -132,7 +132,7 @@
     "mocha": "^10.1.0",
     "prettier": "^2.7.1",
     "typescript": "^4.8.4",
-    "vsce": "^2.13.0"
+    "vsce": "^2.14.0"
   },
   "dependencies": {
     "qs": "^6.11.0"
