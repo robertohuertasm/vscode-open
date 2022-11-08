@@ -1,3 +1,12 @@
+# [1.1.0](https://github.com/robertohuertasm/vscode-open/compare/v1.0.5...v1.1.0) (2022-11-08)
+
+
+### Features
+
+* **remote:** support for remote ([#12](https://github.com/robertohuertasm/vscode-open/issues/12)) ([149acc2](https://github.com/robertohuertasm/vscode-open/commit/149acc2fc1558afe0aaafe80ba27f36c2b59bf7f)), closes [#7](https://github.com/robertohuertasm/vscode-open/issues/7)
+
+
+
 ## [1.0.5](https://github.com/robertohuertasm/vscode-open/compare/v1.0.4...v1.0.5) (2022-11-06)
 
 
