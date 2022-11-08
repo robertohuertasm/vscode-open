@@ -100,7 +100,3 @@ Just download the [user script](resources/userScripts/detailPage.js) and use the
 ## Logo
 
 Credits to [Freepik](https://www.flaticon.com/free-icon/web_981896?related_id=981896&origin=tag)
-
-## Current limitations
-
-`vscode.git` is not available for `WSL` users for the moment. As we're relying on this built-in extension to clone repos, if we can't find it, cloning won't work at all.

@@ -2,7 +2,7 @@
   "name": "open-vscode",
   "displayName": "vscode-open",
   "description": "Open Visual Studio Code with a URL",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "publisher": "robertohuertasm",
   "license": "MIT",
   "author": {
@@ -41,7 +41,6 @@
     }
   ],
   "extensionKind": [
-    "ui",
     "workspace"
   ],
   "categories": [
