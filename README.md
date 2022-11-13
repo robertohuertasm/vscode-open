@@ -89,13 +89,13 @@ The extension offers a couple of settings:
 
 ## GitHub support
 
-If you want to add links to [Visual Studio Code](https://code.visualstudio.com) in GitHub you can use our [user script](resources/userScripts/detailPage.js) or our [unpublished Chrome extension](chrome_extension).
+If you want to add links to [Visual Studio Code](https://code.visualstudio.com) in GitHub you can use our [Chrome extension](https://chrome.google.com/webstore/detail/open-in-vscode/fkjhdnadpbngmnkkbhecoblhmelbcnjp).
 
 You'll get these links:
 
 ![github links](https://raw.githubusercontent.com/robertohuertasm/vscode-open/master/resources/github_links.png)
 
-Just download the [user script](resources/userScripts/detailPage.js) and use the [TamperMonkey](https://www.tampermonkey.net/) browser extension.
+If you don't want to install the extension or you don't use a Chrome based browser you can also download this [user script](resources/userScripts/detailPage.js) and use the [TamperMonkey](https://www.tampermonkey.net/) browser extension.
 
 ## Logo
 
