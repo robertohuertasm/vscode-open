@@ -29,11 +29,11 @@ function isAvoidableDir(dir: string): boolean {
   );
 }
 
-async function isGitRepo(dirUri: vscode.Uri) {
+export async function isGitRepository(dirUri: vscode.Uri) {
   const gitFolder = vscode.Uri.joinPath(dirUri, '.git');
   try {
-    await vscode.workspace.fs.stat(gitFolder);
-    return true;
+    const stat = await vscode.workspace.fs.stat(gitFolder);
+    return stat.type === vscode.FileType.Directory;
   } catch (error) {
     return false;
   }
@@ -44,7 +44,6 @@ export class Opener {
   public readonly repoUri?: string;
   public readonly file?: string;
   public readonly repoRef?: string;
-
   public readonly range?: vscode.Range;
 
   constructor(
@@ -81,46 +80,52 @@ export class Opener {
     );
 
     if (correctWorkspace) {
-      // did the user asked for a particular ref?
-      const gitRepo = await this.git?.openRepository(correctWorkspace.uri);
-      if (gitRepo && this.repoRef) {
-        // are we in the correct ref?
-        let currentCommit = (await this.getCurrentCommit(gitRepo))?.commit;
-        let repoRefCommit = await gitRepo.getCommit(this.repoRef);
-        console.log(`CurrentCommit ${currentCommit} === ${repoRefCommit.hash}`);
-        if (
-          currentCommit &&
-          repoRefCommit &&
-          currentCommit !== repoRefCommit.hash
-        ) {
-          // it seems that's not the case!!
-          // ask the user if they want to checkout the correct branch
-          const response = await vscode.window.showInformationMessage(
-            `It seems that you're not in the correct branch. Do you want to checkout ${this.repoRef}?`,
-            'Yes',
-            'No',
-          );
-          if (response === 'Yes') {
-            await gitRepo.checkout(this.repoRef);
-          }
-        }
-      } else {
-        console.log('NO GIT REPO????');
-      }
-
-      if (!this.file) {
-        // we wanted to open precisely this particular repo (not a file) which is already open.
-        return;
-      }
-
-      // for the moment, we'll check that the file exists (in case it has been deleted in the current branch)
-      const files = await vscode.workspace.findFiles(this.file);
-      if (files) {
-        await this.openFile(correctWorkspace, this.file);
-      }
+      await this.openWorkspace(correctWorkspace);
     } else {
       // it's not in the correct workspace, let's open it in a new window
       await this.openNewWorkspace(true);
+    }
+  }
+
+  private async openWorkspace(
+    workspace: vscode.WorkspaceFolder,
+  ): Promise<void> {
+    // did the user ask for a particular ref?
+    const gitRepo = await this.git?.openRepository(workspace.uri);
+    if (gitRepo && this.repoRef) {
+      // are we in the correct ref?
+      const currentCommit = (await this.getCurrentCommit(gitRepo))?.commit;
+      const repoRefCommit = await gitRepo.getCommit(this.repoRef);
+      console.log(`CurrentCommit ${currentCommit} === ${repoRefCommit.hash}`);
+      if (
+        currentCommit &&
+        repoRefCommit &&
+        currentCommit !== repoRefCommit.hash
+      ) {
+        // it seems that's not the case!!
+        // ask the user if they want to checkout the correct branch
+        const response = await vscode.window.showInformationMessage(
+          `It seems that you're not in the correct branch. Do you want to checkout ${this.repoRef}?`,
+          'Yes',
+          'No',
+        );
+        if (response === 'Yes') {
+          await gitRepo.checkout(this.repoRef);
+        }
+      }
+    } else {
+      console.log('NO GIT REPO????');
+    }
+
+    if (!this.file) {
+      // we wanted to open precisely this particular repo (not a file) which is already open.
+      return;
+    }
+
+    // for the moment, we'll check that the file exists (in case it has been deleted in the current branch)
+    const files = await vscode.workspace.findFiles(this.file);
+    if (files) {
+      await this.openFile(workspace, this.file);
     }
   }
 
@@ -129,7 +134,7 @@ export class Opener {
     const knownRepoInfo = await getOpenedRepoHistory(this.context);
     const knownRepo = knownRepoInfo[this.repoName];
     console.log(`knownRepo ${this.repoName}: ${knownRepo}`);
-    // if the repo is not found in the history, we're going to search it in the config roots
+    // if the repo is not found in the history, we're going to search for it in the config roots
     const repoPath = knownRepo
       ? vscode.Uri.file(knownRepo)
       : await this.findFolderInConfigRoots();
@@ -248,7 +253,7 @@ export class Opener {
           continue;
         }
         const dirUri = vscode.Uri.joinPath(dir, itemName);
-        if (itemName === this.repoName && (await isGitRepo(dirUri))) {
+        if (itemName === this.repoName && (await isGitRepository(dirUri))) {
           // found!
           return dirUri;
         } else {
@@ -320,9 +325,8 @@ export class Opener {
         : process.platform === 'darwin'
         ? 'gitFoldersMac'
         : 'gitFolders';
-    const roots = (config.get(prop) ||
-      config.get('gitFolders') ||
-      []) as string[];
+    const roots =
+      config.get<string[]>(prop) || config.get<string[]>('gitFolders') || [];
     return roots;
   }
 

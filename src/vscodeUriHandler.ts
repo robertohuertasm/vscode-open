@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import type { API } from './git';
-import { Opener } from './opener';
+import { Opener, isGitRepository } from './opener';
 import {
   addOpenedRepoToHistory,
   getPendingUriToOpen,
@@ -29,11 +29,13 @@ export class VSCodeOpenUriHandler implements vscode.UriHandler {
     // check if the workspace folders are git repos.
     // in case they are, store the path of the repo.
     // { repoName: repoPath }
-    for (const folder of folders) {
-      if (await this.isGitRepository(folder)) {
-        await addOpenedRepoToHistory(folder, this.context);
-      }
-    }
+    await Promise.all(
+      folders.map(async (folder) => {
+        if (await this.isGitRepository(folder)) {
+          await addOpenedRepoToHistory(folder, this.context);
+        }
+      }),
+    );
   }
 
   private async handlePendingUriToOpen() {
@@ -58,12 +60,6 @@ export class VSCodeOpenUriHandler implements vscode.UriHandler {
     if (folder.uri.scheme !== 'file') {
       return false;
     }
-    const dotGit = vscode.Uri.joinPath(folder.uri, '.git');
-    try {
-      const stat = await vscode.workspace.fs.stat(dotGit);
-      return stat.type === vscode.FileType.Directory;
-    } catch (err) {
-      return false;
-    }
+    return isGitRepository(folder.uri);
   }
 }

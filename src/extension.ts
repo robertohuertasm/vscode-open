@@ -42,7 +42,6 @@ export async function activate(context: vscode.ExtensionContext) {
       const knownRepos = await getOpenedRepoHistory(context);
       if (!knownRepos) {
         vscode.window.showInformationMessage('No known repositories');
-        return;
       } else {
         const json = JSON.stringify(knownRepos, null, 2); // pretty print
         vscode.workspace.openTextDocument({ content: json, language: 'json' });
