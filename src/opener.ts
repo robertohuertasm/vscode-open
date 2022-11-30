@@ -325,9 +325,11 @@ export class Opener {
         : process.platform === 'darwin'
         ? 'gitFoldersMac'
         : 'gitFolders';
-    const roots =
-      config.get<string[]>(prop) || config.get<string[]>('gitFolders') || [];
-    return roots;
+    const platformRoots = config.get<string[]>(prop);
+    if (platformRoots && platformRoots.length) {
+      return platformRoots;
+    }
+    return config.get<string[]>('gitFolders') || [];
   }
 
   private getMaxDepthFromConfig(): number {
