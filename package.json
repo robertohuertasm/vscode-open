@@ -2,7 +2,7 @@
   "name": "open-vscode",
   "displayName": "vscode-open",
   "description": "Open Visual Studio Code with a URL",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "publisher": "robertohuertasm",
   "license": "MIT",
   "author": {
@@ -81,23 +81,23 @@
         "vscode-open.gitFolders": {
           "type": "array",
           "default": [],
-          "description": "Add here root folders containing your git repositories. The extension will use them to be able to open links to them (Linux)"
+          "description": "AList of folders containing git repositories. Used by the extension to locate your repositories when opening a link."
         },
         "vscode-open.gitFoldersMac": {
           "type": "array",
           "default": [],
-          "description": "Add here root folders containing your git repositories. The extension will use them to be able to open links to them (Mac)"
+          "description": "List of folders containing git repositories. (Only Mac)"
         },
         "vscode-open.gitFoldersWindows": {
           "type": "array",
           "default": [],
-          "description": "Add here root folders containing your git repositories. The extension will use them to be able to open links to them. (Only Windows)"
+          "description": "List of folders containing git repositories. (Only Windows)"
         },
         "vscode-open.maxGitFolderDepth": {
-          "type": "number",
+          "type": "integer",
           "minimum": 1,
           "default": 2,
-          "description": "The amount of nested folder the extension will look into. Keep it reduced."
+          "description": "Search depth into your git folders. Keep it reduced."
         }
       }
     }
