@@ -2,7 +2,7 @@
   "name": "open-vscode",
   "displayName": "vscode-open",
   "description": "Open Visual Studio Code with a URL",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "publisher": "robertohuertasm",
   "license": "MIT",
   "author": {
@@ -81,7 +81,7 @@
         "vscode-open.gitFolders": {
           "type": "array",
           "default": [],
-          "description": "Add here root folders containing your git repositories. The extension will use them to be able to open links to them (Liunx)"
+          "description": "Add here root folders containing your git repositories. The extension will use them to be able to open links to them (Linux)"
         },
         "vscode-open.gitFoldersMac": {
           "type": "array",
