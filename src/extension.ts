@@ -40,7 +40,7 @@ export async function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand('vscode-open.knownRepos', async () => {
       const knownRepos = await getOpenedRepoHistory(context);
-      if (!knownRepos) {
+      if (!knownRepos || !Object.keys(knownRepos).length) {
         vscode.window.showInformationMessage('No known repositories');
       } else {
         const json = JSON.stringify(knownRepos, null, 2); // pretty print
