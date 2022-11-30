@@ -125,7 +125,7 @@ export class Opener {
 
     // for the moment, we'll check that the file exists (in case it has been deleted in the current branch)
     const files = await vscode.workspace.findFiles(this.file);
-    if (files) {
+    if (files.length) {
       await this.openFile(workspace, this.file);
     }
   }
