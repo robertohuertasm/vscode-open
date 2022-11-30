@@ -3,6 +3,11 @@ import * as vscode from 'vscode';
 const OPENED_REPO_HISTORY_KEY = 'openedRepoHistory';
 const PENDING_URI_TO_OPEN = 'vscode-open.last-uri';
 
+export interface HistoryRecord {
+  readonly name: string;
+  readonly uri: vscode.Uri;
+}
+
 export async function getOpenedRepoHistory(
   context: vscode.ExtensionContext,
 ): Promise<Record<string, string | undefined>> {
@@ -10,18 +15,18 @@ export async function getOpenedRepoHistory(
 }
 
 export async function addOpenedRepoToHistory(
-  folder: vscode.WorkspaceFolder,
+  record: HistoryRecord,
   context: vscode.ExtensionContext,
 ): Promise<void> {
   const repos = await getOpenedRepoHistory(context);
-  repos[folder.name] = folder.uri.fsPath;
+  repos[record.name] = record.uri.fsPath;
   await context.globalState.update(OPENED_REPO_HISTORY_KEY, repos);
   // re-check, there are some cases where this might not work
   const check = await getOpenedRepoHistory(context);
-  if (!check[folder.name]) {
-    console.error(`Failed to save ${folder.name} to repo history`);
+  if (!check[record.name]) {
+    console.error(`Failed to save ${record.name} to repo history`);
   } else {
-    console.log(`Added repo ${folder.name} to the repo history`);
+    console.log(`Added repo ${record.name} to the repo history`);
   }
 }
 
