@@ -6,6 +6,7 @@ import {
   getOpenedRepoHistory,
   removeOpenedRepoFromHistory,
   resetPendingUriToOpen,
+  addOpenedRepoToHistory,
 } from './repoHistory';
 
 // The kind of URIS we are handling will be like this:
@@ -130,15 +131,7 @@ export class Opener {
   }
 
   private async openNewWorkspace(forceNewWindow = false) {
-    // has this repo been ever opened?
-    const knownRepoInfo = await getOpenedRepoHistory(this.context);
-    const knownRepo = knownRepoInfo[this.repoName];
-    console.log(`knownRepo ${this.repoName}: ${knownRepo}`);
-    // if the repo is not found in the history, we're going to search for it in the config roots
-    const repoPath = knownRepo
-      ? vscode.Uri.file(knownRepo)
-      : await this.findFolderInConfigRoots();
-
+    const repoPath = await this.findFolderInSources();
     if (this.file) {
       // NOTE: opening a folder causes the extension to reload again.
       // This means that if you want to open a file, you need to do it on extension activation.
@@ -150,6 +143,30 @@ export class Opener {
     }
 
     await this.openFolder(repoPath, forceNewWindow);
+  }
+
+  private async findFolderInSources(): Promise<vscode.Uri | undefined> {
+    // has this repo been ever opened?
+    const knownRepoInfo = await getOpenedRepoHistory(this.context);
+    const knownRepo = knownRepoInfo[this.repoName];
+    console.log(`knownRepo ${this.repoName}: ${knownRepo}`);
+    // if the repo is not found in the history, we're going to search for it in the config roots
+    if (knownRepo) {
+      return vscode.Uri.file(knownRepo);
+    }
+    const repoInRootsUri = await this.findFolderInConfigRoots();
+    if (repoInRootsUri) {
+      // we're going to store the repo in the history
+      await addOpenedRepoToHistory(
+        {
+          name: this.repoName,
+          uri: repoInRootsUri,
+        },
+        this.context,
+      );
+      return repoInRootsUri;
+    }
+    return undefined;
   }
 
   private async getCurrentCommit(
