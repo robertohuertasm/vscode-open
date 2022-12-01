@@ -234,10 +234,11 @@ export class Opener {
   }
 
   private toGitCloneUri(): vscode.Uri {
-    const uri = this.originalUri;
-    return vscode.Uri.parse(
-      `${uri.scheme}://vscode.git/clone?url=${this.repoUri}&ref=${this.repoRef}`,
-    );
+    let cloneUri = `${this.originalUri.scheme}://vscode.git/clone?url=${this.repoUri}`;
+    if (this.repoRef) {
+      cloneUri += `&ref=${this.repoRef}`;
+    }
+    return vscode.Uri.parse(cloneUri);
   }
 
   private async openFile(
