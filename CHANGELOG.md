@@ -1,3 +1,12 @@
+## [1.1.7](https://github.com/robertohuertasm/vscode-open/compare/v1.1.6...v1.1.7) (2022-12-01)
+
+
+### Bug Fixes
+
+* **clone:** fix git clone uri ([ceee292](https://github.com/robertohuertasm/vscode-open/commit/ceee292fa9ca9bbdec3cd6c4bbff50078a192881))
+
+
+
 ## [1.1.1](https://github.com/robertohuertasm/vscode-open/compare/v1.1.0...v1.1.1) (2022-11-12)
 
 - Added [Chrome Extension link](https://chrome.google.com/webstore/detail/open-in-vscode/fkjhdnadpbngmnkkbhecoblhmelbcnjp) to the readme.
