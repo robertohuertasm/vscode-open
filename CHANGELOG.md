@@ -1,3 +1,12 @@
+# [1.2.0](https://github.com/robertohuertasm/vscode-open/compare/v1.1.7...v1.2.0) (2023-01-22)
+
+
+### Bug Fixes
+
+* **readme:** fix badges from readme ([4cc43d9](https://github.com/robertohuertasm/vscode-open/commit/4cc43d9667b942b5eabd10dfb6afe67ee2a5f497))
+
+
+
 ## [1.1.7](https://github.com/robertohuertasm/vscode-open/compare/v1.1.6...v1.1.7) (2022-12-01)
 
 
