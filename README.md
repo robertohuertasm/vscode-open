@@ -100,3 +100,7 @@ If you don't want to install the extension or you don't use a Chrome based brows
 ## Logo
 
 Credits to [Freepik](https://www.flaticon.com/free-icon/web_981896?related_id=981896&origin=tag)
+
+## License
+
+This extension is released under the [MIT license](/LICENSE).

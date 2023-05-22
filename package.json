@@ -2,9 +2,9 @@
   "name": "open-vscode",
   "displayName": "vscode-open",
   "description": "Open Visual Studio Code with a URL",
-  "version": "1.2.0",
+  "version": "1.2.4",
   "publisher": "robertohuertasm",
-  "license": "MIT",
+  "license": "SEE LICENSE IN LICENSE",
   "author": {
     "name": "Roberto Huertas",
     "email": "roberto.huertas@outlook.com",
@@ -131,7 +131,7 @@
     "mocha": "^10.1.0",
     "prettier": "^2.8.3",
     "typescript": "^4.9.4",
-    "vsce": "^2.15.0"
+    "vsce": "^1.97.0"
   },
   "dependencies": {
     "qs": "^6.11.0"
