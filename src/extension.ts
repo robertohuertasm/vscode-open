@@ -13,7 +13,7 @@ async function getGitApi(): Promise<API | undefined> {
   const gitExtension =
     vscode.extensions.getExtension<GitExtension>('vscode.git');
   if (!gitExtension) {
-    console.error('Git extension not found!');
+    console.error('[vscode-open]: Git extension not found!');
     return undefined;
   }
   const gitApi = gitExtension.isActive
@@ -25,7 +25,7 @@ async function getGitApi(): Promise<API | undefined> {
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export async function activate(context: vscode.ExtensionContext) {
-  console.log('vscode-open enabled!');
+  console.log('[vscode-open]: vscode-open enabled!');
 
   context.subscriptions.push(
     vscode.commands.registerCommand('vscode-open.reset', () => {

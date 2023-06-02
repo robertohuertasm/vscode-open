@@ -24,9 +24,11 @@ export async function addOpenedRepoToHistory(
   // re-check, there are some cases where this might not work
   const check = await getOpenedRepoHistory(context);
   if (!check[record.name]) {
-    console.error(`Failed to save ${record.name} to repo history`);
+    console.error(
+      `[vscode-open]: Failed to save ${record.name} to repo history`,
+    );
   } else {
-    console.log(`Added repo ${record.name} to the repo history`);
+    console.log(`[vscode-open]: Added repo ${record.name} to the repo history`);
   }
 }
 
@@ -37,7 +39,7 @@ export async function removeOpenedRepoFromHistory(
   const repos = await getOpenedRepoHistory(context);
   delete repos[repoName];
   await context.globalState.update(OPENED_REPO_HISTORY_KEY, repos);
-  console.log(`Removed repo ${repoName} from the repo history`);
+  console.log(`[vscode-open]: Removed repo ${repoName} from the repo history`);
 }
 
 export async function resetOpenedRepoHistory(

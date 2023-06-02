@@ -15,7 +15,7 @@ export class VSCodeOpenUriHandler implements vscode.UriHandler {
   }
 
   public async handleUri(uri: vscode.Uri) {
-    console.log(`Handling URI: ${uri}`);
+    console.log(`[vscode-open]: Handling URI: ${uri}`);
     const info = new Opener(uri, this.context, this.git);
     await info.open();
   }
@@ -23,7 +23,7 @@ export class VSCodeOpenUriHandler implements vscode.UriHandler {
   private async storeFolderInformation(): Promise<void> {
     const folders = vscode.workspace.workspaceFolders;
     if (!folders) {
-      console.log('NO FOLDER OPEN!');
+      console.log('[vscode-open]: NO FOLDER OPEN!');
       return;
     }
     // check if the workspace folders are git repos.
@@ -42,7 +42,7 @@ export class VSCodeOpenUriHandler implements vscode.UriHandler {
     const pendingUriToOpen = getPendingUriToOpen(this.context);
     if (pendingUriToOpen) {
       console.log(
-        `@@@@ Handler found pending uri to open! ${pendingUriToOpen}`,
+        `[vscode-open]: @@@@ Handler found pending uri to open! ${pendingUriToOpen}`,
       );
       await resetPendingUriToOpen(this.context);
       const info = new Opener(

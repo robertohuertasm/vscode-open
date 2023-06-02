@@ -2,7 +2,7 @@ const DETAIL_PAGE_SEPARATOR = '/blob/';
 const BTN_VSCODE = 'vscode';
 const BTN_INSIDERS = 'vscode-insiders';
 
-console.log('Loading content script');
+console.log('[vscode-open]: Loading content script');
 
 function addButton(text, link, node, id) {
   const el = document.createElement('a');
@@ -15,7 +15,7 @@ function addButton(text, link, node, id) {
   const children = node.children;
   const last = children[children.length - 1];
   node.insertBefore(el, last.nextSibling);
-  // console.log('Element added!');
+  // console.log('[vscode-open]: Element added!');
 }
 
 function addElement(time) {

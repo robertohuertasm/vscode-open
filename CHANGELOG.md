@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/robertohuertasm/vscode-open/compare/v1.1.7...v1.2.0) (2023-06-02)
+
+
+### Chore
+
+* **logs:** add extension tag 
+
 # [1.2.0](https://github.com/robertohuertasm/vscode-open/compare/v1.1.7...v1.2.0) (2023-01-22)
 
 

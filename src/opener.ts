@@ -97,7 +97,9 @@ export class Opener {
       // are we in the correct ref?
       const currentCommit = (await this.getCurrentCommit(gitRepo))?.commit;
       const repoRefCommit = await gitRepo.getCommit(this.repoRef);
-      console.log(`CurrentCommit ${currentCommit} === ${repoRefCommit.hash}`);
+      console.log(
+        `[vscode-open]: CurrentCommit ${currentCommit} === ${repoRefCommit.hash}`,
+      );
       if (
         currentCommit &&
         repoRefCommit &&
@@ -115,7 +117,7 @@ export class Opener {
         }
       }
     } else {
-      console.log('NO GIT REPO????');
+      console.log('[vscode-open]: NO GIT REPO????');
     }
 
     if (!this.file) {
@@ -149,7 +151,7 @@ export class Opener {
     // has this repo been ever opened?
     const knownRepoInfo = await getOpenedRepoHistory(this.context);
     const knownRepo = knownRepoInfo[this.repoName];
-    console.log(`knownRepo ${this.repoName}: ${knownRepo}`);
+    console.log(`[vscode-open]: knownRepo ${this.repoName}: ${knownRepo}`);
     // if the repo is not found in the history, we're going to search for it in the config roots
     if (knownRepo) {
       return vscode.Uri.file(knownRepo);
@@ -185,10 +187,12 @@ export class Opener {
           res(repo.state.HEAD);
         }
         attempts += 1;
-        console.log(`Attempt ${attempts} to get current commit`);
+        console.log(`[vscode-open]: Attempt ${attempts} to get current commit`);
       }, 1000);
     });
-    console.log(`Current commit: ${branch?.commit} - name: ${branch?.name}`);
+    console.log(
+      `[vscode-open]: Current commit: ${branch?.commit} - name: ${branch?.name}`,
+    );
     return branch;
   }
 
@@ -208,7 +212,9 @@ export class Opener {
       } catch (err) {
         // let's remove it from the knwon repos
         removeOpenedRepoFromHistory(this.repoName, this.context);
-        console.error(`Known repo must have been deleted. Not found. ${err}`);
+        console.error(
+          `[vscode-open]: Known repo must have been deleted. Not found. ${err}`,
+        );
       }
     }
     // 2. if folder doesn't exist, we're going to ask the user to select a folder or clone the repo (only if there's git support)
@@ -257,9 +263,9 @@ export class Opener {
     maxDepth: number,
     level = 0,
   ): Promise<vscode.Uri | undefined> {
-    console.info(`Searching ${this.repoName} in ${directory}`);
+    console.info(`[vscode-open]: Searching ${this.repoName} in ${directory}`);
     if (level > maxDepth) {
-      console.log(`Max depth reached ${maxDepth}`);
+      console.log(`[vscode-open]: Max depth reached ${maxDepth}`);
       return;
     }
     const dir = vscode.Uri.file(directory);
@@ -288,7 +294,7 @@ export class Opener {
       }
     } catch (error) {
       // most probably the root is not ok.
-      console.error(error);
+      console.error(`[vscode-open]: ${error}`, error);
     }
   }
 
