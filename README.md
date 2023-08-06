@@ -8,10 +8,10 @@
 <h3>Open <a href="https://code.visualstudio.com" target="_blank">Visual Studio Code</a> with a URL</h3>
 <br/>
 
-[![Version](https://vsmarketplacebadges.dev/version-short/robertohuertasm.open-vscode.svg?style=for-the-badge&colorA=252525&colorB=3f860b)](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.open-vscode)
-[![Installs](https://vsmarketplacebadges.dev/installs-short/robertohuertasm.open-vscode.svg?style=for-the-badge&colorA=252525&colorB=3f860b)](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.open-vscode)
-[![Downloads](https://vsmarketplacebadges.dev/downloads-short/robertohuertasm.open-vscode.svg?style=for-the-badge&colorA=252525&colorB=3f860b)](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.open-vscode)
-[![Ratings](https://vsmarketplacebadges.dev/rating/robertohuertasm.open-vscode.svg?style=for-the-badge&colorA=252525&colorB=3f860b)](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.open-vscode)
+[![Version](https://img.shields.io/visual-studio-marketplace/v/robertohuertasm.open-vscode.svg?style=for-the-badge&colorA=252525&colorB=3f860b)](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.open-vscode)
+[![Installs](https://img.shields.io/visual-studio-marketplace/i/robertohuertasm.open-vscode.svg?style=for-the-badge&colorA=252525&colorB=3f860b)](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.open-vscode)
+[![Downloads](https://img.shields.io/visual-studio-marketplace/d/robertohuertasm.open-vscode.svg?style=for-the-badge&colorA=252525&colorB=3f860b)](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.open-vscode)
+[![Ratings](https://img.shields.io/visual-studio-marketplace/r/robertohuertasm.open-vscode.svg?style=for-the-badge&colorA=252525&colorB=3f860b)](https://marketplace.visualstudio.com/items?itemName=robertohuertasm.open-vscode)
 
 <br/>
 
