@@ -21,41 +21,52 @@
 
 ## Purpose
 
-The basic idea for this extension is to provide a **standard way to open your repositories and files in Visual Studio Code from a URL**.
+This extension provides a **standard way to open repositories and files in Visual Studio Code from a URL**.
+
+## Quick start
+
+1. Install the extension from the VS Code marketplace.
+2. Configure `vscode-open.gitFolders` (or the OS-specific settings) with the
+   parent folders that contain your Git repositories.
+3. Open a link using the protocol described below.
+4. If the repo is not found, you can locate it or clone it when prompted (if a
+   `uri` is provided).
 
 ## Challenge
 
-Although VSCode [already provides a way to open files from a URL](https://code.visualstudio.com/docs/editor/command-line#_opening-vs-code-with-urls), it needs to know the specific path to the file. So it's **not practical** if you want to link to a particular file for any user.
+Although VS Code [already provides a way to open files from a URL](https://code.visualstudio.com/docs/editor/command-line#_opening-vs-code-with-urls), it needs to know the specific path to the file. So it is **not practical** if you want to link to a particular file for any user.
 
 Aside from that, it doesn't support cases such as:
 
-- Open a repository which is not already cloned.
-- Locate a repository in the system.
-- Understand if the repository is in the same branch and let the user checkout to a particular commit if needed.
+- Open a repository that is not already cloned.
+- Locate a repository on the system.
+- Detect whether the repository is on the right ref and let the user check out
+  the requested ref if needed.
 
 **This extension aims to cover all these use cases**.
 
-## Features & link protocol
+## Features and link protocol
 
 The extension allows you to open Visual Studio Code from any well-formed URL.
+Query values should be URL-encoded when needed (for example, spaces).
 
-The **URL format** should be:
+The **URL format** is:
 
-`vscode://robertohuertasm.open-vscode?repo=<name_of_your_repo>&file=<path_to_your_file>&range=<line:char-line:char>&uri=<git_clone_uri>&ref=<commit_hash_or_branch_name_or_tag_name>`.
+`vscode://robertohuertasm.open-vscode?repo=<repo_name>&file=<path_to_file>&range=<line:char-line:char>&uri=<git_clone_uri>&ref=<commit_hash_or_branch_or_tag>`.
 
 Where:
 
 Param Name | Mandatory | Description
 ---|:---:|---|
 **repo**  | yes | Name of the repository.
-**file**  | no  | Path to a file. It must be relative to the repo's root.
-**range** | no  | There are several options here. You can reference a specific position in a line (*3:2, would put the cursor in line 3, column 2*), or a range, just passing a second position (*3:2-3:10, will select chars from 2 to 10 in line 3*). Note that `char` is totally optional and will fallback to 1. For instance, *3-10* is the same as *3:1-10:1*.
-**uri**   | no  | Complete url of your git repository. supports both `https` and `ssh` git repo URIs. If you provide this parameter in your links, the extension will be able to clone the repository in case it cannot find it in the user's machine.
-**ref**   | no  | Name of the branch, tag, commit sha.
+**file**  | no  | Path to a file. It must be relative to the repo root.
+**range** | no  | Cursor position or range. Use `3:2` to place the cursor at line 3, column 2. Use `3:2-3:10` to select a range. `char` defaults to `1`, so `3-10` equals `3:1-10:1`.
+**uri**   | no  | Full Git clone URL. Supports `https` and `ssh`. If provided, the extension can clone the repository when it cannot be found locally.
+**ref**   | no  | Branch, tag, or commit SHA.
 
-As you can see, the **only mandatory parameter is the `repo`**.
+The **only mandatory parameter is `repo`**.
 
-> Note that you can also use `vscode-insiders://` or `vscodium://`.
+> You can also use `vscode-insiders://` or `vscodium://`.
 
 Examples:
 
@@ -75,27 +86,37 @@ vscodium://robertohuertasm.open-vscode?repo=licensebat&uri=https://github.com/li
 The extension uses several strategies to try to find and locate the repositories in the user's machine:
 
 - The extension provides a setting for the user to inform the **paths of the folders containing git repositories**.
-- **Everytime the user opens a repo in VSCode, the extension will store both the name and the path**, so later it can use this information as a map to easily locate it.
+- **Every time the user opens a repo in VS Code, the extension will store both the name and the path**, so later it can use this information as a map to easily locate it.
 - In case a repository is **not found**, the extension will ask the user whether to **locate it or clone it**.
-- If a `ref` parameter is provided, the extension will use it when cloning the repository. In case the repository is already opened and it's not in the correct commit, the extension **will ask the user whether to checkout or not**.
+- If a `ref` parameter is provided, the extension will use it when cloning the repository. In case the repository is already opened and it's not in the correct commit, the extension **will ask the user whether to check out or not**.
 
 ## Settings
 
 The extension offers a couple of settings:
 
-- `vscode-open.gitFolders`: A **collection of folders containing your git repositories**. This will be used by the extension to try to find/locate your repositories when a url is handled. Note that there's also a `vscode-open.gitFoldersWindows` setting specifically to support `Windows` and a `vscode-open.gitFoldersMac` for `Mac`. If those are not set, `vscode-open.gitFolders` will be used by default.
+- `vscode-open.gitFolders`: A **list of folders containing your Git repositories**. This will be used by the extension to try to find/locate your repositories when a URL is handled. Note that there's also a `vscode-open.gitFoldersWindows` setting specifically to support `Windows` and a `vscode-open.gitFoldersMac` for `Mac`. If those are not set, `vscode-open.gitFolders` will be used by default.
 
-- `vscode-open.maxGitFolderDepth`: This is set to 2 by default and **it represents the amount of nesting used by the extension when looking for your repositories**. Bear in mind that if this number is too high, the process of locating a repo in your `vscode-open.gitFolders` may take a long time. **It's recommended to only use a maximum of 3**.
+- `vscode-open.maxGitFolderDepth`: Defaults to `2` and **controls the search depth when looking for your repositories**. A high value can slow the search. **A maximum of 3 is recommended**.
+
+## Troubleshooting
+
+- **Repo not found**: Add the parent folder to `vscode-open.gitFolders`, or
+  open the repo once in VS Code so it is stored in the history. If you include
+  `uri`, the extension can clone it.
+- **File not found**: Confirm the `file` path is relative to the repo root and
+  exists on the requested ref.
+- **Ref not found**: Check the `ref` value. It can be a branch name, tag, or
+  commit SHA.
 
 ## GitHub support
 
-If you want to add links to [Visual Studio Code](https://code.visualstudio.com) in GitHub you can use our [Chrome extension](https://chrome.google.com/webstore/detail/open-in-vscode/fkjhdnadpbngmnkkbhecoblhmelbcnjp).
+If you want to add links to [Visual Studio Code](https://code.visualstudio.com) inside GitHub, use the [Chrome extension](https://chrome.google.com/webstore/detail/open-in-vscode/fkjhdnadpbngmnkkbhecoblhmelbcnjp).
 
 You'll get these links:
 
 ![github links](https://raw.githubusercontent.com/robertohuertasm/vscode-open/master/resources/github_links.png)
 
-If you don't want to install the extension or you don't use a Chrome based browser you can also download this [user script](resources/userScripts/detailPage.js) and use the [TamperMonkey](https://www.tampermonkey.net/) browser extension.
+If you do not want to install the Chrome extension or you use a different browser, you can also use this [user script](resources/userScripts/detailPage.js) with [TamperMonkey](https://www.tampermonkey.net/).
 
 ## Logo
 

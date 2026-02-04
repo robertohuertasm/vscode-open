@@ -1,6 +1,7 @@
+import * as path from 'path';
 import * as vscode from 'vscode';
 import * as qs from 'qs';
-import { API, Branch, Repository } from './git';
+import { API, Branch, Commit, Repository } from './git';
 import {
   addPendingUriToOpen,
   getOpenedRepoHistory,
@@ -34,7 +35,10 @@ export async function isGitRepository(dirUri: vscode.Uri) {
   const gitFolder = vscode.Uri.joinPath(dirUri, '.git');
   try {
     const stat = await vscode.workspace.fs.stat(gitFolder);
-    return stat.type === vscode.FileType.Directory;
+    return (
+      stat.type === vscode.FileType.Directory ||
+      stat.type === vscode.FileType.File
+    );
   } catch (error) {
     return false;
   }
@@ -52,21 +56,27 @@ export class Opener {
     private context: vscode.ExtensionContext,
     private git?: API,
   ) {
-    const query = qs.parse(originalUri.query) as {
-      repo: string;
-      uri?: string;
-      ref?: string;
-      file?: string;
-      range?: string;
-    };
-    this.repoName = query.repo;
-    this.repoUri = query.uri;
-    this.repoRef = query.ref;
-    this.file = query.file;
-    this.range = this.rangeFromString(query.range);
+    const query = qs.parse(originalUri.query) as Record<
+      string,
+      string | string[] | undefined
+    >;
+    const repoName = Array.isArray(query.repo) ? query.repo[0] : query.repo;
+    const repoUri = Array.isArray(query.uri) ? query.uri[0] : query.uri;
+    const repoRef = Array.isArray(query.ref) ? query.ref[0] : query.ref;
+    const file = Array.isArray(query.file) ? query.file[0] : query.file;
+    const range = Array.isArray(query.range) ? query.range[0] : query.range;
+    this.repoName = (repoName || '').trim();
+    this.repoUri = repoUri;
+    this.repoRef = repoRef;
+    this.file = file;
+    this.range = this.rangeFromString(range);
   }
 
   public async open(): Promise<void> {
+    if (!this.repoName) {
+      vscode.window.showErrorMessage('No repo specified in the link');
+      return;
+    }
     const workspaces = vscode.workspace.workspaceFolders;
     if (!workspaces?.length) {
       // there is no workspace open
@@ -76,8 +86,8 @@ export class Opener {
 
     // there is at least a workspace open
     // is the correct workspace already open?
-    const correctWorkspace = workspaces.find((w) =>
-      w.uri.fsPath.endsWith(this.repoName),
+    const correctWorkspace = workspaces.find(
+      (w) => path.posix.basename(w.uri.path) === this.repoName,
     );
 
     if (correctWorkspace) {
@@ -96,10 +106,20 @@ export class Opener {
     if (gitRepo && this.repoRef) {
       // are we in the correct ref?
       const currentCommit = (await this.getCurrentCommit(gitRepo))?.commit;
-      const repoRefCommit = await gitRepo.getCommit(this.repoRef);
-      console.log(
-        `[vscode-open]: CurrentCommit ${currentCommit} === ${repoRefCommit.hash}`,
-      );
+      let repoRefCommit: Commit | undefined;
+      try {
+        repoRefCommit = await gitRepo.getCommit(this.repoRef);
+      } catch (error) {
+        console.warn('[vscode-open]: Ref not found', error);
+        vscode.window.showWarningMessage(
+          `Ref ${this.repoRef} not found in ${this.repoName}.`,
+        );
+      }
+      if (repoRefCommit) {
+        console.log(
+          `[vscode-open]: CurrentCommit ${currentCommit} === ${repoRefCommit.hash}`,
+        );
+      }
       if (
         currentCommit &&
         repoRefCommit &&
@@ -126,10 +146,7 @@ export class Opener {
     }
 
     // for the moment, we'll check that the file exists (in case it has been deleted in the current branch)
-    const files = await vscode.workspace.findFiles(this.file);
-    if (files.length) {
-      await this.openFile(workspace, this.file);
-    }
+    await this.openFile(workspace, this.file);
   }
 
   private async openNewWorkspace(forceNewWindow = false) {
@@ -253,6 +270,14 @@ export class Opener {
   ): Promise<void> {
     const rootPath = workspaceFolder.uri;
     const openUri = vscode.Uri.joinPath(rootPath, file);
+    try {
+      await vscode.workspace.fs.stat(openUri);
+    } catch (error) {
+      vscode.window.showErrorMessage(
+        `File ${file} not found in ${this.repoName}`,
+      );
+      return;
+    }
     await vscode.commands.executeCommand('vscode.open', openUri, {
       selection: this.range,
     });
